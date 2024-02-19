@@ -5,7 +5,7 @@ import { CVDocument } from "@/components/CVDocument";
 
 export function CVDocumentViewer() {
   return (
-    <PDFViewer>
+    <PDFViewer className="h-dvh w-dvw">
       <CVDocument />
     </PDFViewer>
   );

@@ -1,7 +1,7 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { CVDocumentViewer } from "@/components/CVDocumentViewer";
 
 export default async function Home() {
-  return redirect("/en/resume.pdf");
+  return <CVDocumentViewer />;
 }
