@@ -162,6 +162,13 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 3,
   },
+  content__skills_list: {
+    // create a display flex with a wrap of 4 columns
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
   content__left_shift: {
     borderLeft: `4px solid ${primaryColor}`,
     paddingLeft: 10,
@@ -244,9 +251,9 @@ export function CVDocument({ data: { profile, keys } }: CVDocumentProps) {
             <Text>{profile.summary}</Text>
           </View>
           <Text style={styles.content__title}>{keys.mainSkills}</Text>
-          <View>
+          <View style={styles.content__skills_list}>
             {profile.skills?.map((skill, index) => (
-              <Text key={index}>{skill}</Text>
+              <ListItem key={index}>{skill}</ListItem>
             ))}
           </View>
           <Text style={styles.content__title}>{keys.projects}</Text>

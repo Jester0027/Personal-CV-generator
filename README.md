@@ -3,9 +3,9 @@ Small CV generator created for me.
 ### Usage
 
 The CVs are generated from yaml files inside the `content` folder. 
-You have to specify the path to this folder via an environment variable (see `.env.dist`).
+You have to specify the <u>absolute</u> path to this folder via an environment variable (see `.env.dist`).
 
-an configuration file (`__configuration.yaml`) is required, with a `defaultLocale` key and a map of locales to a file
+a configuration file (`__configuration.yaml`) is required, with a `defaultLocale` key and a map of locales to a file
 e.g.
 ```yaml
 defaultLocale: en
