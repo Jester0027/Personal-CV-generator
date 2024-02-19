@@ -3,28 +3,29 @@
 import { Keys, Resume } from "@/types/Resume";
 import { CVDocumentViewer } from "@/components/CVDocumentViewer";
 import { redirect } from "next/navigation";
-
-const locales = ["fr", "en"];
-
-const map = {
-  fr: "fr_resume.yaml",
-  en: "en_resume.yaml",
-};
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { parseAllDocuments, parseDocument } from "yaml";
+import { configuration } from "@/helpers/configuration";
 
 export default async function Home({
   params: { locale },
 }: {
-  params: { locale: "fr" | "en" };
+  params: { locale: string };
 }) {
-  if (!locale || !locales.includes(locale)) {
-    return redirect("en");
+  if (!locale || !configuration.locales.includes(locale)) {
+    return redirect(configuration.defaultLocale);
   }
-  let { 0: keys, 1: profile }: { 0: Keys; 1: Resume } = await import(
-    `@/app/content/${map[locale]}`
+
+  const path = join(process.env.CONTENT_PATH!, configuration.mappings[locale]);
+  const file = await readFile(path);
+  const [firstDocument, secondDocument] = parseAllDocuments(
+    file.toString("utf-8"),
   );
-  profile.email = "## REDACTED ##";
-  profile.phoneNumber = "## REDACTED ##";
-  profile = JSON.parse(JSON.stringify(profile));
-  keys = JSON.parse(JSON.stringify(keys));
+  const keys = firstDocument.toJSON() as Keys;
+  let profile = secondDocument.toJSON() as Resume;
+  profile.phoneNumber = "XXX-XXX-XXXX";
+  profile.email = "xxx@xxx.com";
+
   return <CVDocumentViewer data={{ keys, profile }} />;
 }
