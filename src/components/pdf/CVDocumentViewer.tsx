@@ -1,7 +1,7 @@
 "use client";
 
 import { PDFViewer } from "@react-pdf/renderer";
-import { CVDocument } from "@/components/CVDocument";
+import { CVDocument } from "@/components/pdf/CVDocument";
 import { Keys, Resume } from "@/types/Resume";
 import { useHasHydrated } from "@/hooks/hasHydrated";
 

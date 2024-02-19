@@ -1,11 +1,11 @@
 "use server";
 
 import { Keys, Resume } from "@/types/Resume";
-import { CVDocumentViewer } from "@/components/CVDocumentViewer";
+import { CVDocumentViewer } from "@/components/pdf/CVDocumentViewer";
 import { redirect } from "next/navigation";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { parseAllDocuments, parseDocument } from "yaml";
+import { parseAllDocuments } from "yaml";
 import { configuration } from "@/helpers/configuration";
 
 export default async function Home({

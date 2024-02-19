@@ -10,8 +10,22 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { PropsWithChildren } from "react";
 import { Keys, Resume } from "@/types/Resume";
+import {
+  containerMargin,
+  containerPadding,
+  focusText,
+  primaryColor,
+  primaryText,
+  primaryTextLight,
+} from "@/components/constants";
+import {
+  LocationIcon,
+  MailIcon,
+  PhoneIcon,
+  WebIcon,
+} from "@/components/pdf/icons";
+import { ListItem } from "@/components/pdf/ListItem";
 
 Font.register({
   family: "Inter",
@@ -61,25 +75,6 @@ Font.register({
     },
   ],
 });
-
-const primaryText = "#838383";
-const primaryTextLight = "#b3b3b3";
-const focusText = "#000";
-
-const primaryColor = "#dedede";
-
-const defaultMarginLeft = 40;
-const defaultMarginRight = 20;
-
-const containerMargin = {
-  marginLeft: defaultMarginLeft,
-  marginRight: defaultMarginRight,
-};
-
-const containerPadding = {
-  paddingLeft: defaultMarginLeft,
-  paddingRight: defaultMarginRight,
-};
 
 const styles = StyleSheet.create({
   document: {
@@ -141,8 +136,9 @@ const styles = StyleSheet.create({
     backgroundColor: primaryText,
     borderRadius: "50%",
     marginRight: 5,
-    width: 15,
-    height: 15,
+    padding: 3,
+    width: 17,
+    height: 17,
   },
   header__right_pane__item_text: {
     color: primaryText,
@@ -163,7 +159,6 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
   },
   content__skills_list: {
-    // create a display flex with a wrap of 4 columns
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
@@ -212,13 +207,17 @@ export function CVDocument({ data: { profile, keys } }: CVDocumentProps) {
           <View style={styles.header__right_pane}>
             <View style={styles.header__right_pane__column}>
               <View style={styles.header__right_pane__item}>
-                <View style={styles.header__right_pane__item_icon} />
+                <View style={styles.header__right_pane__item_icon}>
+                  <PhoneIcon />
+                </View>
                 <Text style={styles.header__right_pane__item_text}>
                   {profile.phoneNumber}
                 </Text>
               </View>
               <View style={styles.header__right_pane__item}>
-                <View style={styles.header__right_pane__item_icon} />
+                <View style={styles.header__right_pane__item_icon}>
+                  <LocationIcon />
+                </View>
                 <Text style={styles.header__right_pane__item_text}>
                   {profile.location}
                 </Text>
@@ -226,13 +225,17 @@ export function CVDocument({ data: { profile, keys } }: CVDocumentProps) {
             </View>
             <View style={styles.header__right_pane__column}>
               <View style={styles.header__right_pane__item}>
-                <View style={styles.header__right_pane__item_icon} />
+                <View style={styles.header__right_pane__item_icon}>
+                  <MailIcon />
+                </View>
                 <Text style={styles.header__right_pane__item_text}>
                   {profile.email}
                 </Text>
               </View>
               <View style={styles.header__right_pane__item}>
-                <View style={styles.header__right_pane__item_icon} />
+                <View style={styles.header__right_pane__item_icon}>
+                  <WebIcon />
+                </View>
                 <Text style={styles.header__right_pane__item_text}>
                   <Link
                     style={{ textDecoration: "underline", color: primaryText }}
@@ -287,33 +290,6 @@ export function CVDocument({ data: { profile, keys } }: CVDocumentProps) {
         </View>
       </Page>
     </Document>
-  );
-}
-
-function ListItem({ children }: PropsWithChildren) {
-  return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 5,
-        position: "relative",
-      }}
-    >
-      <View
-        style={{
-          backgroundColor: primaryTextLight,
-          borderRadius: "50%",
-          marginRight: 5,
-          width: 4,
-          height: 4,
-          position: "absolute",
-          top: 4,
-        }}
-      />
-      <Text style={{ marginLeft: 15 }}>{children}</Text>
-    </View>
   );
 }
 
