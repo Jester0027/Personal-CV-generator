@@ -1,0 +1,44 @@
+summary: Summary
+mainSkills: Main skills
+projects: Projects
+
+---
+
+fullName: John Doe
+title: Software Developer
+phoneNumber: 123-456-7890
+email: test@test.com
+website:
+  display: github.com/test
+  link: https://github.com/test
+location: New York, NY
+summary: >
+  A software developer with 5 years of experience in developing web applications.
+  Proficient in JavaScript, React, and Node.js.
+  Passionate about learning new technologies and solving complex problems.
+skills:
+  - HTML
+  - CSS
+  - JavaScript
+experience:
+  - title: Software Developer
+    subtitle: ABC Inc. 2024 - Present
+    actions:
+      - >
+        Developed and maintained web applications using React and Node.js.
+        Collaborated with the team to design and implement new features.
+      - >
+        Improved the performance of the application by optimizing the code and
+        reducing the load time by 30%.
+      - >
+        Implemented a new feature that increased the user engagement by 20%.
+  - title: Junior Software Developer
+    subtitle: XYZ Corp. 2020 - 2024
+    actions:
+      - >
+        Assisted in developing and maintaining web applications using React and Node.js.
+        Worked closely with the senior developers to learn new technologies and best practices.
+      - >
+        Participated in code reviews and provided feedback to improve the code quality.
+      - >
+        Developed a new feature that improved the user experience and increased the user engagement by 15%.

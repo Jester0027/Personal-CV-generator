@@ -11,6 +11,7 @@ import {
   View,
 } from "@react-pdf/renderer";
 import { PropsWithChildren } from "react";
+import { Keys, Resume } from "@/types/Resume";
 
 Font.register({
   family: "Inter",
@@ -83,7 +84,7 @@ const containerPadding = {
 const styles = StyleSheet.create({
   document: {
     fontFamily: "Inter",
-    fontSize: 10,
+    fontSize: 9,
     color: primaryText,
   },
   header: {
@@ -165,6 +166,9 @@ const styles = StyleSheet.create({
     borderLeft: `4px solid ${primaryColor}`,
     paddingLeft: 10,
   },
+  content__project__margin_top: {
+    marginTop: 15,
+  },
   content__project: {},
   content__project__title: {
     fontSize: 13,
@@ -181,17 +185,21 @@ const styles = StyleSheet.create({
   },
 });
 
-interface CVDocumentProps {}
+interface CVDocumentProps {
+  data: { keys: Keys; profile: Resume };
+}
 
-export function CVDocument({}: CVDocumentProps) {
+export function CVDocument({ data: { profile, keys } }: CVDocumentProps) {
   return (
     <Document style={styles.document}>
       <Page>
         <View style={styles.header}>
           <View style={styles.header__left_pane}>
-            <Text style={styles.header__left_pane__title}>Paul Etienne</Text>
+            <Text style={styles.header__left_pane__title}>
+              {profile.fullName}
+            </Text>
             <Text style={styles.header__left_pane__subtitle}>
-              Software Developer
+              {profile.title}
             </Text>
           </View>
           <View style={styles.header__right_pane}>
@@ -199,13 +207,13 @@ export function CVDocument({}: CVDocumentProps) {
               <View style={styles.header__right_pane__item}>
                 <View style={styles.header__right_pane__item_icon} />
                 <Text style={styles.header__right_pane__item_text}>
-                  +123456789
+                  {profile.phoneNumber}
                 </Text>
               </View>
               <View style={styles.header__right_pane__item}>
                 <View style={styles.header__right_pane__item_icon} />
                 <Text style={styles.header__right_pane__item_text}>
-                  Belgium
+                  {profile.location}
                 </Text>
               </View>
             </View>
@@ -213,7 +221,7 @@ export function CVDocument({}: CVDocumentProps) {
               <View style={styles.header__right_pane__item}>
                 <View style={styles.header__right_pane__item_icon} />
                 <Text style={styles.header__right_pane__item_text}>
-                  test@test.com
+                  {profile.email}
                 </Text>
               </View>
               <View style={styles.header__right_pane__item}>
@@ -221,9 +229,9 @@ export function CVDocument({}: CVDocumentProps) {
                 <Text style={styles.header__right_pane__item_text}>
                   <Link
                     style={{ textDecoration: "underline", color: primaryText }}
-                    src="https://github.com/Jester0027"
+                    src={profile.website.link}
                   >
-                    github.com/Jester0027
+                    {profile.website.display}
                   </Link>
                 </Text>
               </View>
@@ -231,63 +239,44 @@ export function CVDocument({}: CVDocumentProps) {
           </View>
         </View>
         <View style={styles.content}>
-          <Text style={styles.content__title}>Summary</Text>
+          <Text style={styles.content__title}>{keys.summary}</Text>
           <View style={styles.content__left_shift}>
-            <Text>
-              I'm a full-stack software developer with a passion for creating
-              robust and scalable applications. My expertise lies in C#/.NET,
-              React, and Angular, and I'm also proficientin PHP, Symfony,NodeJS,
-              PostgreSQL,Docker, and Kubernetes. Ithrive in a Linux environment
-              and love exploring new technologies and methodologies to improve
-              my craft.
-            </Text>
+            <Text>{profile.summary}</Text>
           </View>
-          <Text style={styles.content__title}>Main Skills</Text>
+          <Text style={styles.content__title}>{keys.mainSkills}</Text>
           <View>
-            <Text>Javascript/Typescript</Text>
-            <Text>PHP</Text>
-            <Text>C#/.NET</Text>
-            <Text>Symfony</Text>
-            <Text>NestJS</Text>
-            <Text>PostgreSQL</Text>
-            <Text>ASP.NET Core</Text>
-            <Text>React</Text>
-            <Text>Angular</Text>
-            <Text>Docker</Text>
-            <Text>Linux (RHEL based)</Text>
-            <Text>Kubernetes</Text>
+            {profile.skills?.map((skill, index) => (
+              <Text key={index}>{skill}</Text>
+            ))}
           </View>
-          <Text style={styles.content__title}>Projects</Text>
-          <View style={styles.content__left_shift}>
-            <View style={styles.content__project}>
-              <Text style={styles.content__project__title}>
-                Project 1: Project Name
-              </Text>
-              <Text style={styles.content__project__subtitle}>
-                Company Name
-              </Text>
-              <View style={styles.content__project__list}>
-                <ListItem>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Asperiores at blanditiis fuga illo quos. Dignissimos dolore
-                  dolorem iusto labore laborum non possimus quasi, temporibus.
-                  Consequuntur error esse nemo similique veritatis.
-                </ListItem>
-                <ListItem>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Asperiores at blanditiis fuga illo quos. Dignissimos dolore
-                  dolorem iusto labore laborum non possimus quasi, temporibus.
-                  Consequuntur error esse nemo similique veritatis.
-                </ListItem>
-                <ListItem>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Asperiores at blanditiis fuga illo quos. Dignissimos dolore
-                  dolorem iusto labore laborum non possimus quasi, temporibus.
-                  Consequuntur error esse nemo similique veritatis.
-                </ListItem>
+          <Text style={styles.content__title}>{keys.projects}</Text>
+          {profile.experience?.map((project, index) => (
+            <View
+              key={index}
+              style={
+                index !== 0
+                  ? {
+                      ...styles.content__project__margin_top,
+                      ...styles.content__project,
+                    }
+                  : styles.content__project
+              }
+            >
+              <View style={styles.content__left_shift} break>
+                <Text style={styles.content__project__title}>
+                  {project.title}
+                </Text>
+                <Text style={styles.content__project__subtitle}>
+                  {project.subtitle}
+                </Text>
+                <View style={styles.content__project__list}>
+                  {project.actions.map((action, index) => (
+                    <ListItem key={index}>{action}</ListItem>
+                  ))}
+                </View>
               </View>
             </View>
-          </View>
+          ))}
         </View>
       </Page>
     </Document>
@@ -321,4 +310,5 @@ function ListItem({ children }: PropsWithChildren) {
   );
 }
 
-export const getDocumentBuffer = () => renderToBuffer(<CVDocument />);
+export const getDocumentBuffer = (data: { keys: Keys; profile: Resume }) =>
+  renderToBuffer(<CVDocument data={data} />);

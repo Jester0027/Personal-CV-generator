@@ -1,7 +1,7 @@
 "use server";
 
-import { CVDocumentViewer } from "@/components/CVDocumentViewer";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  return <CVDocumentViewer />;
+  return redirect("en");
 }
