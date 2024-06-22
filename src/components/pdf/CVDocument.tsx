@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Document,
   Font,
@@ -27,50 +25,57 @@ import {
 } from "@/components/pdf/icons";
 import { ListItem } from "@/components/pdf/ListItem";
 
+const getFontPath = (font: string) => {
+  if (typeof window === "undefined") {
+    return `${process.env.FONTS_PATH}/${font}.ttf`;
+  }
+  return `/fonts/${font}.ttf`;
+};
+
 Font.register({
   family: "Inter",
-  src: "/fonts/Inter-Medium.ttf",
+  src: getFontPath("Inter-Medium"),
   fontStyle: "normal",
   fontWeight: 500,
   fonts: [
     {
       family: "Inter",
-      src: "/fonts/Inter-Thin.ttf",
+      src: getFontPath("Inter-Thin"),
       fontWeight: 100,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-Light.ttf",
+      src: getFontPath("Inter-Light"),
       fontWeight: 200,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-Regular.ttf",
+      src: getFontPath("Inter-Regular"),
       fontWeight: 300,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-Medium.ttf",
+      src: getFontPath("Inter-Medium"),
       fontWeight: 500,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-SemiBold.ttf",
+      src: getFontPath("Inter-SemiBold"),
       fontWeight: 600,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-Bold.ttf",
+      src: getFontPath("Inter-Bold"),
       fontWeight: 700,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-ExtraBold.ttf",
+      src: getFontPath("Inter-ExtraBold"),
       fontWeight: 800,
     },
     {
       family: "Inter",
-      src: "/fonts/Inter-Black.ttf",
+      src: getFontPath("Inter-Black"),
       fontWeight: 900,
     },
   ],
@@ -177,6 +182,11 @@ const styles = StyleSheet.create({
     fontWeight: "semibold",
     color: focusText,
   },
+  content__project__company: {
+    fontSize: 10,
+    fontWeight: "bold",
+    color: primaryText,
+  },
   content__project__subtitle: {
     fontSize: 10,
     color: primaryText,
@@ -276,6 +286,11 @@ export function CVDocument({ data: { profile, keys } }: CVDocumentProps) {
                 <Text style={styles.content__project__title}>
                   {project.title}
                 </Text>
+                {project.company ? (
+                  <Text style={styles.content__project__company}>
+                    {project.company}
+                  </Text>
+                ) : null}
                 <Text style={styles.content__project__subtitle}>
                   {project.subtitle}
                 </Text>
